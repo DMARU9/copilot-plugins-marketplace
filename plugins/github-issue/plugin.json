@@ -1,0 +1,15 @@
+{
+  "name": "github-issue",
+  "version": "1.0.0",
+  "description": "定められたフォーマットに従ってGitHub Issueを作成・登録する共通スキル。バリデーションスクリプトでフォーマット違反を検出してから登録するため、誤った形式のIssue登録を防止します。",
+  "author": {
+    "name": "DMARU9",
+    "url": "https://github.com/DMARU9"
+  },
+  "skills": [
+    {
+      "name": "github-issue",
+      "path": "skills/github-issue"
+    }
+  ]
+}

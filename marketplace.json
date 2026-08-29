@@ -12,6 +12,16 @@
         "ref": "main",
         "path": "plugins/conventional-commit"
       }
+    },
+    {
+      "name": "github-issue",
+      "description": "定められたフォーマットに従ってGitHub Issueを作成・登録する共通スキル。バリデーションでフォーマット違反を検出してから登録するため、誤った形式のIssue登録を防止します。",
+      "version": "1.0.0",
+      "repository": {
+        "url": "https://github.com/DMARU9/copilot-plugins-marketplace.git",
+        "ref": "main",
+        "path": "plugins/github-issue"
+      }
     }
   ]
 }
