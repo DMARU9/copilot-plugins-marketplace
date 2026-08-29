@@ -1,5 +1,5 @@
 {
-  "name": "takumi-plugins",
+  "name": "dmaru9-plugins",
   "version": "1.0.0",
   "description": "個人用の Agent Plugins マーケットプレイス。複数リポで使う共通スキルをプラグインごとに管理・配布します。",
   "plugins": [
