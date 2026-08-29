@@ -1,0 +1,17 @@
+{
+  "name": "takumi-plugins",
+  "version": "1.0.0",
+  "description": "個人用の Agent Plugins マーケットプレイス。複数リポで使う共通スキルをプラグインごとに管理・配布します。",
+  "plugins": [
+    {
+      "name": "conventional-commit",
+      "description": "Conventional Commits 1.0.0 に準拠したコミットを作成する共通スキル。",
+      "version": "1.0.0",
+      "repository": {
+        "url": "https://github.com/DMARU9/copilot-plugins-marketplace.git",
+        "ref": "main",
+        "path": "plugins/conventional-commit"
+      }
+    }
+  ]
+}
