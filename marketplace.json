@@ -6,7 +6,7 @@
     {
       "name": "conventional-commit",
       "description": "Conventional Commits 1.0.0 に準拠したコミットを作成する共通スキル。",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "repository": {
         "url": "https://github.com/DMARU9/copilot-plugins-marketplace.git",
         "ref": "main",
@@ -16,7 +16,7 @@
     {
       "name": "github-issue",
       "description": "定められたフォーマットに従ってGitHub Issueを作成・登録する共通スキル。バリデーションでフォーマット違反を検出してから登録するため、誤った形式のIssue登録を防止します。",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "repository": {
         "url": "https://github.com/DMARU9/copilot-plugins-marketplace.git",
         "ref": "main",

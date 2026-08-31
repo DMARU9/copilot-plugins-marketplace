@@ -1,6 +1,6 @@
 {
   "name": "conventional-commit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Conventional Commits 1.0.0 に準拠したコミットを作成する共通スキル。複数プロジェクトで使い回すためのプラグイン化版。",
   "author": {
     "name": "DMARU9",
