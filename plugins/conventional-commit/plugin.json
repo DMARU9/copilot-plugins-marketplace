@@ -1,15 +1,10 @@
 {
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "conventional-commit",
   "version": "1.0.1",
   "description": "Conventional Commits 1.0.0 に準拠したコミットを作成する共通スキル。複数プロジェクトで使い回すためのプラグイン化版。",
   "author": {
     "name": "DMARU9",
     "url": "https://github.com/DMARU9"
-  },
-  "skills": [
-    {
-      "name": "conventional-commit",
-      "path": "skills/conventional-commit"
-    }
-  ]
+  }
 }

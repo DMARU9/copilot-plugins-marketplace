@@ -1,27 +1,24 @@
 {
   "name": "dmaru9-plugins",
-  "version": "1.0.0",
-  "description": "個人用の Agent Plugins マーケットプレイス。複数リポで使う共通スキルをプラグインごとに管理・配布します。",
+  "metadata": {
+    "description": "個人用の Agent Plugins マーケットプレイス。複数リポで使う共通スキルをプラグインごとに管理・配布します。",
+    "version": "1.0.0"
+  },
+  "owner": {
+    "name": "DMARU9"
+  },
   "plugins": [
     {
       "name": "conventional-commit",
+      "source": "plugins/conventional-commit",
       "description": "Conventional Commits 1.0.0 に準拠したコミットを作成する共通スキル。",
-      "version": "1.0.1",
-      "repository": {
-        "url": "https://github.com/DMARU9/copilot-plugins-marketplace.git",
-        "ref": "main",
-        "path": "plugins/conventional-commit"
-      }
+      "version": "1.0.1"
     },
     {
       "name": "github-issue",
+      "source": "plugins/github-issue",
       "description": "定められたフォーマットに従ってGitHub Issueを作成・登録する共通スキル。バリデーションでフォーマット違反を検出してから登録するため、誤った形式のIssue登録を防止します。",
-      "version": "1.0.1",
-      "repository": {
-        "url": "https://github.com/DMARU9/copilot-plugins-marketplace.git",
-        "ref": "main",
-        "path": "plugins/github-issue"
-      }
+      "version": "1.0.1"
     }
   ]
 }
