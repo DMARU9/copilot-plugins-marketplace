@@ -12,6 +12,7 @@
 | プラグイン | 内容 |
 |---|---|
 | `conventional-commit` | Conventional Commits 1.0.0 に準拠したコミットを作成するスキル |
+| `github-issue` | 定められたフォーマットに従って GitHub Issue を作成・登録する共通スキル。バリデーション付き。 |
 
 ## 導入方法（VS Code Copilot）
 
@@ -26,15 +27,22 @@
 
 ```text
 copilot-plugins-marketplace/
-├── .github-plugin/
-│   └── marketplace.json          # マーケットプレイス定義
+├── marketplace.json              # マーケットプレイス定義
 ├── plugins/
-│   └── conventional-commit/
+│   ├── conventional-commit/
+│   │   ├── plugin.json           # プラグイン定義
+│   │   └── skills/
+│   │       └── conventional-commit/
+│   │           ├── SKILL.md
+│   │           └── scripts/
+│   │               └── commit-helper.sh
+│   └── github-issue/
+│       ├── README.md
 │       ├── plugin.json           # プラグイン定義
 │       └── skills/
-│           └── conventional-commit/
+│           └── github-issue/
 │               ├── SKILL.md
-│               └── scripts/
-│                   └── commit-helper.sh
+│               ├── scripts/
+│               └── templates/
 └── README.md
 ```
