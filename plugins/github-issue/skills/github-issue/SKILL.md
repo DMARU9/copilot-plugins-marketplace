@@ -94,11 +94,11 @@ labels:
 
 | 種別 | テンプレート |
 |---|---|
-| 企画 | `templates/article.md` |
-| 改善 | `templates/enhancement.md` |
-| バグ | `templates/bug.md` |
-| タスク | `templates/task.md` |
-| 質問 | `templates/question.md` |
+| 企画 | `assets/article.md` |
+| 改善 | `assets/enhancement.md` |
+| バグ | `assets/bug.md` |
+| タスク | `assets/task.md` |
+| 質問 | `assets/question.md` |
 
 ---
 
@@ -121,7 +121,7 @@ labels:
 ```bash
 # テンプレートをコピー（プラグインのスキルディレクトリから）
 SKILL_DIR=$(dirname "$(dirname "${BASH_SOURCE[0]}")")  # このスキルが配置されるディレクトリ
-cp "$SKILL_DIR/templates/<種別>.md" tmp/issue-<種別>.md
+cp "$SKILL_DIR/assets/<種別>.md" tmp/issue-<種別>.md
 
 # 内容を編集
 ```

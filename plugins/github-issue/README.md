@@ -48,11 +48,11 @@ VS Code の Copilot チャットで以下のように依頼します：
 ## テンプレート
 
 ```
-templates/article.md       企画
-templates/enhancement.md   改善
-templates/bug.md           バグ
-templates/task.md          タスク
-templates/question.md      質問
+assets/article.md       企画
+assets/enhancement.md   改善
+assets/bug.md           バグ
+assets/task.md          タスク
+assets/question.md      質問
 ```
 
 ## バリデーション
