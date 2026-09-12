@@ -147,7 +147,7 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 
 **Purpose**: 複数ストーリーにまたがる確認と仕上げ
 
-- [ ] T027 [P] `plugins/placement-decision-flow/README.md` に利用方法を追記する（`SKILL.md` の起動が**明示指名のみ**であること、`decide.sh` / `find-skills.sh` の役割、`references/criteria.md` を判断基準の正とすることを記載）
+- [X] T027 [P] `plugins/placement-decision-flow/README.md` に利用方法を追記する（`SKILL.md` の起動が**明示指名のみ**であること、`decide.sh` / `find-skills.sh` の役割、`references/criteria.md` を判断基準の正とすることを記載）
 - [ ] T028 `quickstart.md` の検証 1〜11 を順に実行し、各検証の実際の出力を記録する（期待結果と異なる箇所は、実装を直すか `quickstart.md` を直すかを判断して反映する）
 - [ ] T029 `plugins/placement-decision-flow/tests/test_criteria_sync.sh` が**判断表の変更を実際に検出する**ことを最終確認する（`criteria.md` の `target` を 1 つ書き換えて失敗することを確認し、復元後にフルスイートが全 pass に戻ることを確認。FR-017 の実効性の最終的な裏付け）
 - [ ] T030 `bash plugins/placement-decision-flow/tests/run.sh` でフルスイートを実行し、全テストが pass することを確認する（T016 / T021 / T026 / T029 / T033 の変異が残っていないことを `git status` と `git diff` で確認してから実行する）
