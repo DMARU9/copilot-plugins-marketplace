@@ -154,7 +154,7 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 - [X] T031 [P] `SKILL.md` の最終確認を行う（500 行未満、資材への参照がスキルルートからの相対パスで 1 階層まで、`description` に `Use when:` トリガーがあること、`name` が親ディレクトリ名と一致することを確認。`tests/test_manifest.sh` が pass する）
 - [X] T032 [P] `plugin.json` と `.github/plugin/marketplace.json` の整合を最終確認する（`name` / `version` / `source` の一致。既存 2 プラグインのエントリが変更されていないことを `git diff` で確認）
 - [X] T033 `plugins/placement-decision-flow/tests/test_constitution.sh` を作成する（**憲章 I / VII の実装規律を機械的に固定する**。配布スクリプト `decide.sh` / `find-skills.sh` に `declare -A` が含まれないこと（bash 3.2 互換・憲章 VII）、`../../` によるプラグイン境界の越境参照が無いこと（憲章 I）、環境固有の絶対パス（`/home/` `/Users/` など）が埋め込まれていないこと（憲章 VII）、両スクリプトが `SCRIPT_DIR` 基準で自身の位置を解決していること（憲章 I）。**変異探針**: `decide.sh` に `declare -A` を 1 行挿入すると失敗することを実測し、復元後にフルスイートが全 pass に戻ることを確認する）
-- [ ] T034 `plugins/placement-decision-flow/tests/test_performance.sh` を作成する（**SC-004a / SC-004b を実測可能な形で固定する**。SC-004b: `decide.sh` の実行時間を秒精度で計測し 1 秒未満であることを固定する。SC-004a: 4 分類それぞれの**完全な入力**を 1 回だけ渡したときに `result=decision` が返ること、すなわち追加の問い返し 0 回で配置先が確定することを固定する。`result=ask` を許容するのは回答に `unknown` を含むケースだけに限り、それ以外で `result=ask` が返れば失敗させる）
+- [X] T034 `plugins/placement-decision-flow/tests/test_performance.sh` を作成する（**SC-004a / SC-004b を実測可能な形で固定する**。SC-004b: `decide.sh` の実行時間を秒精度で計測し 1 秒未満であることを固定する。SC-004a: 4 分類それぞれの**完全な入力**を 1 回だけ渡したときに `result=decision` が返ること、すなわち追加の問い返し 0 回で配置先が確定することを固定する。`result=ask` を許容するのは回答に `unknown` を含むケースだけに限り、それ以外で `result=ask` が返れば失敗させる）
 
 ---
 
