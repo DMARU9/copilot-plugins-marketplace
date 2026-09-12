@@ -107,7 +107,7 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 ### Tests for User Story 2
 
 - [X] T017 [P] [US2] `plugins/placement-decision-flow/tests/fixtures/governance-cases.tsv` を作成する（`入力(TSV)\t期待target\t期待reason` の形式。ガバナンス 3 項目それぞれの代表ケース、`governance=yes` × `reusable` の 3 値、`governance=yes` × `needs_code` の 3 値、`governance=unknown` で `result=ask` になるケースを含める）
-- [ ] T018 [US2] `plugins/placement-decision-flow/tests/test_governance.sh` を作成する（**実装より先に書き、失敗することを確認**。対象は **FR-005** / **FR-021** / **FR-022**。T017 のケースを全件流し、`target` / `reason` が期待どおりであること、`governance=yes` のとき `branches` に `reusable` / `needs_code` が**現れない**こと（短絡の証明）、`missing=governance` が評価順の最初に現れることを検証。SC-002（スキルへの誤判定 0 件）と SC-010（順序依存のぶれ 0 件）を直接測る）
+- [X] T018 [US2] `plugins/placement-decision-flow/tests/test_governance.sh` を作成する（**実装より先に書き、失敗することを確認**。対象は **FR-005** / **FR-021** / **FR-022**。T017 のケースを全件流し、`target` / `reason` が期待どおりであること、`governance=yes` のとき `branches` に `reusable` / `needs_code` が**現れない**こと（短絡の証明）、`missing=governance` が評価順の最初に現れることを検証。SC-002（スキルへの誤判定 0 件）と SC-010（順序依存のぶれ 0 件）を直接測る）
 
 ### Implementation for User Story 2
 
