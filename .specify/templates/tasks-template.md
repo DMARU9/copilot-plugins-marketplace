@@ -9,7 +9,9 @@ description: "Task list template for feature implementation"
 
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests**: 本リポジトリの憲章「V. Test-First & Non-Vacuous Tests」により、実行可能なロジック
+（シェルスクリプト・検証処理・変換処理）のテストは**必須**です。対象範囲は feature specification
+に従います。テストは対象コードに変異を加えて失敗することを実測で確認してください（原則 V）。
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
