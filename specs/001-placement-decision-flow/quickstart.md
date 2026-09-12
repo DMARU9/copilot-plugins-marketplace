@@ -192,10 +192,9 @@ B=$(cd ~ && "$D" --governance no --orchestration no --reusable yes --needs-code 
 ```bash
 cd /home/takumi/github/copilot-plugins-marketplace
 
-# plugin.json と marketplace.json の name/version 一致
-diff <(jq -S '{name,version}' plugins/placement-decision-flow/plugin.json) \
-     <(jq -S '.plugins[] | select(.name=="placement-decision-flow") | {name,version}' \
-        .github/plugin/marketplace.json) && echo "OK: マニフェスト一致"
+# plugin.json と marketplace.json の name/version/source 一致
+# （jq を必要としない。M-1 / M-2 が上記の一致を固定している）
+bash plugins/placement-decision-flow/tests/test_manifest.sh
 
 # SKILL.md の name と親ディレクトリ名の一致
 diff <(grep -m1 '^name:' plugins/placement-decision-flow/skills/placement-decision-flow/SKILL.md | sed 's/^name: *//') \
@@ -206,8 +205,12 @@ grep -q 'Use when:' plugins/placement-decision-flow/skills/placement-decision-fl
   && echo "OK: Use when: あり"
 ```
 
-**期待される結果**: 3 つとも `OK`。差分が出ればマニフェスト契約（`contracts/skill-frontmatter.md`）
-違反。
+**期待される結果**: `test_manifest.sh` が全 pass（実測: `PASS: 20 FAIL: 0`）、続く 2 つが `OK`。
+差分が出ればマニフェスト契約（`contracts/skill-frontmatter.md`）違反。
+
+> **注**: `contracts/skill-frontmatter.md` §5 には `jq -S` を使った等価な確認コマンドが載っている。
+> 前提条件に「追加依存なし」を掲げているため、ここでは `jq` を必要としないテストで同じ内容を確かめる
+> （`jq` のある環境では契約側のコマンドでも同じ結果になる）。
 
 ---
 
@@ -219,25 +222,38 @@ grep -q 'Use when:' plugins/placement-decision-flow/skills/placement-decision-fl
 cd /home/takumi/github/copilot-plugins-marketplace
 S=plugins/placement-decision-flow/skills/placement-decision-flow/scripts/decide.sh
 cp "$S" /tmp/decide.backup
+sha_before=$(sha256sum "$S" | cut -d' ' -f1)
 
-# 変異 1: ガバナンスの短絡を外す（governance を最初のゲートから降ろす）
+# 変異 1: ガバナンスの短絡を外す（governance=yes でも早期に exit 0 しないようにする）
 python3 - <<'EOF'
 p = "plugins/placement-decision-flow/skills/placement-decision-flow/scripts/decide.sh"
 s = open(p, encoding="utf-8").read()
-open(p, "w", encoding="utf-8").write(s.replace("governance", "govX", 1))
+old = "reason=governance\\nbranches=governance=yes\\n'\n        exit 0\n"
+new = "reason=governance\\nbranches=governance=yes\\n'\n"
+assert s.count(old) == 1, s.count(old)  # 置換対象が一意であることを先に確かめる
+open(p, "w", encoding="utf-8").write(s.replace(old, new))
 EOF
-bash plugins/placement-decision-flow/tests/run.sh 2>&1 | tail -5
+bash plugins/placement-decision-flow/tests/run.sh 2>&1 | tail -8
 
 # 復元して必ずフルスイートを再実行する
 cp /tmp/decide.backup "$S"
+[ "$sha_before" = "$(sha256sum "$S" | cut -d' ' -f1)" ] && echo "OK: 復元（sha256 一致）"
 bash plugins/placement-decision-flow/tests/run.sh && echo "OK: 復元後に全 pass"
 ```
 
-**期待される結果**: 変異させた状態でテストが**失敗する**（`FAIL` が 1 件以上）。
-復元後に**全 pass に戻る**。
+**期待される結果**: 変異させた状態でテストが**失敗する**（`FAIL` が 1 件以上。実測: `PASS: 4 FAIL: 3`
+＝ `test_criteria_sync.sh` / `test_decide.sh` / `test_governance.sh`）。
+復元後に**全 pass に戻る**（`PASS: 7 FAIL: 0`）。
 
 > **注意**: 復元後のフルスイート再実行までを 1 セットとする。復元して再実行しないと、
 > 「変異で落ちた」のか「元から落ちていた」のかを区別できない。
+
+> **落とし穴**: 変異の対象を「最初に現れる `governance`」のように**出現順で選んではならない**。
+> `decide.sh` の最初の `governance` は 4 行目のコメントにあり、そこを書き換えても挙動は変わらないため
+> フルスイートは `PASS: 7 FAIL: 0` のままになる（＝探針自身が空虚で、何も証明しない）。
+> 変異は**挙動を変える行**に当て、`assert s.count(old) == 1` で一意性を先に確かめる。
+>
+> また、この探針は**検証専用のツール**として Python 3 を使う（出荷スクリプトは追加依存を持たない）。
 
 ---
 
@@ -313,3 +329,31 @@ AI 側の手順に属し、機械的なテストでは固定できない。
 
 > 検証 12・13 は人手確認であり、`quickstart.md` の「人手確認の記録」に観測結果を残すまで
 > 完了としない。
+
+---
+
+## 検証 1〜11 の実施記録（機械的検証）
+
+実施日: 2026-09-12 / 実行環境: bash 5.2.21(1)-release、`jq` なし、`python3` 3.12.3
+（作業ディレクトリは `copilot-plugins-marketplace` のルート）。
+
+| 検証 | 実行したコマンドの要点 | 観測結果 | 判定 |
+|---|---|---|---|
+| 1 | `decide.sh` に 5 通りの完全な入力 | 5 件とも `exit=0`。`target` は `subagent-definition` / `orchestrator` / `skill-scripts` / `skill-instructions` / `subagent-definition`。`branches` は評価した分岐だけを評価順に列挙（例: `branches=governance=yes` のみ） | PASS |
+| 2 | `--governance yes --reusable yes --needs-code yes` | `target=subagent-definition` / `reason=governance` / `branches=governance=yes`（`reusable` / `needs_code` は出力に現れない＝短絡の証明） | PASS |
+| 3 | 引数なし / `--orchestration unknown` | `result=ask` + `missing=governance` / `missing=orchestration`、ともに `exit=0` | PASS |
+| 4 | `maybe` / `YES` / 未知オプション / 重複指定 | 4 件とも `exit=2`、stdout は空、stderr に理由（`decide.sh: ... の値が不正です` 等） | PASS |
+| 5 | `--query` あり / なし / 一致 0 件 | 2 件がタブ区切り相対パスの昇順、`--query review` で 1 件、0 件は出力なし（空行もなし）で `exit=0` | PASS |
+| 6 | 一時ディレクトリへ複製し前後のツリー sha256 を比較 | `OK: 書き込みなし` | PASS |
+| 7 | `--detect-conventions` | 4 行（`skill` 2 / `subagent` 2）、`layer` → `path` の昇順、`exists` は `yes` / `no` | PASS |
+| 8 | `tests/run.sh` / 実行ディレクトリを変えて出力比較 | 全テスト pass（`PASS: 7 FAIL: 0`）、`OK: 実行ディレクトリに依存しない` | PASS |
+| 9 | `tests/test_manifest.sh` + name 一致 `diff` + `Use when:` の grep | `PASS: 20 FAIL: 0`、`OK: skill 名一致`、`OK: Use when: あり` | PASS |
+| 10 | 変異 1（governance の短絡を外す）→ フルスイート → 復元 → フルスイート | 変異中 `PASS: 4 FAIL: 3`（`test_criteria_sync.sh` / `test_decide.sh` / `test_governance.sh`）、復元後 `PASS: 7 FAIL: 0` | PASS |
+| 11 | `time decide.sh ...` | `real 0m0.006s`（1 秒未満） | PASS |
+
+### この実施で直した quickstart の記述
+
+| 箇所 | 直す前 | 直したあと | 理由（実測） |
+|---|---|---|---|
+| 検証 9 | `jq -S` でマニフェストを比較 | `jq` を必要としない `tests/test_manifest.sh` で同じ内容を確認 | 前提条件に「追加依存なし」を掲げているが `jq` は環境に無く、検証が実行できなかった（`jq: 未インストール`）。M-1 / M-2 が name / version / source の一致を固定している |
+| 検証 10 | `s.replace("governance", "govX", 1)`（最初の出現を置換） | governance=yes の短絡（`exit 0`）を除去 | 最初の `governance` は 4 行目のコメントにあり、置換しても挙動が変わらず **`PASS: 7 FAIL: 0` のまま**で探針が空虚だった。挙動を変える行に当て替えて `FAIL: 3` を観測した |
