@@ -1,0 +1,10 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "placement-decision-flow",
+  "version": "1.0.0",
+  "description": "「新しい処理をどこに置くか」を、オーケストレーター／サブエージェント定義／スキルの3層から決定的に判定する共通スキル。判断表と判定コードを同梱し、判定結果と適用した分岐を提示します。",
+  "author": {
+    "name": "DMARU9",
+    "url": "https://github.com/DMARU9"
+  }
+}
