@@ -39,10 +39,10 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 
 **Purpose**: プラグインの骨格と契約ファイルを作成する
 
-- [ ] T001 `plugins/placement-decision-flow/` 配下のディレクトリ構造を作成する（`skills/placement-decision-flow/scripts/`、`skills/placement-decision-flow/references/`、`tests/fixtures/repo/.github/skills/code-review/`、`tests/fixtures/repo/plugins/sample-plugin/skills/sample-skill/`）
-- [ ] T002 [P] `plugins/placement-decision-flow/plugin.json` を作成する（`contracts/skill-frontmatter.md` §1 と完全一致させる。`$schema` / `name: placement-decision-flow` / `version: 1.0.0` / `description` / `author` のみ。閉じたスキーマのため他キーを追加しない）
-- [ ] T003 [P] `plugins/placement-decision-flow/README.md` を作成する（プラグインの目的、前提条件（bash 3.2+ / `git` / `find`・`sed`・`grep`・`sort`、追加依存なし・ネットワーク不要）、`tests/run.sh` の実行方法、`chmod +x` の必要性を記載）
-- [ ] T004 `.github/plugin/marketplace.json` の `plugins` 配列に `placement-decision-flow` のエントリを追加する（`source: plugins/placement-decision-flow`、`version: 1.0.0`。既存 2 エントリは変更せず、`name` 昇順の並びを保つ）
+- [X] T001 `plugins/placement-decision-flow/` 配下のディレクトリ構造を作成する（`skills/placement-decision-flow/scripts/`、`skills/placement-decision-flow/references/`、`tests/fixtures/repo/.github/skills/code-review/`、`tests/fixtures/repo/plugins/sample-plugin/skills/sample-skill/`）
+- [X] T002 [P] `plugins/placement-decision-flow/plugin.json` を作成する（`contracts/skill-frontmatter.md` §1 と完全一致させる。`$schema` / `name: placement-decision-flow` / `version: 1.0.0` / `description` / `author` のみ。閉じたスキーマのため他キーを追加しない）
+- [X] T003 [P] `plugins/placement-decision-flow/README.md` を作成する（プラグインの目的、前提条件（bash 3.2+ / `git` / `find`・`sed`・`grep`・`sort`、追加依存なし・ネットワーク不要）、`tests/run.sh` の実行方法、`chmod +x` の必要性を記載）
+- [X] T004 `.github/plugin/marketplace.json` の `plugins` 配列に `placement-decision-flow` のエントリを追加する（`source: plugins/placement-decision-flow`、`version: 1.0.0`。既存 2 エントリは変更せず、`name` 昇順の並びを保つ）
 
 ---
 
@@ -50,10 +50,10 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 
 **Purpose**: すべてのストーリーが依存するテスト基盤。**このフェーズが完了するまでストーリー実装を開始しない**
 
-- [ ] T005 `plugins/placement-decision-flow/tests/run.sh` を作成する（`tests/test_*.sh` をディレクトリ探索で自動収集して順に実行し、成功・失敗件数を集計。失敗があれば非ゼロで終了。テスト実行ビットの確認も行う）
-- [ ] T006 [P] 探索テスト用のフィクスチャを作成する。`plugins/placement-decision-flow/tests/fixtures/repo/.github/skills/code-review/SKILL.md`（`name: code-review`）と `plugins/placement-decision-flow/tests/fixtures/repo/plugins/sample-plugin/skills/sample-skill/SKILL.md`（`name: sample-skill`）。両方の `description` に `Use when:` トリガーを含め、`--query` フィルタのテストで片方だけが一致する語（例: `review`）を入れる
-- [ ] T007 [P] `plugins/placement-decision-flow/tests/test_manifest.sh` を作成する（`contracts/skill-frontmatter.md` の検証規則のうち、**Phase 2 の時点で対象ファイルが存在するものだけ**を固定する。`plugin.json` の `$schema` 完全一致・`name` パターン・必須キーのみの構成（P-1〜P-6）、`plugin.json` と `marketplace.json` の `name`/`version` 一致と `source` の実在（M-1〜M-2）。**`SKILL.md` の検証（S-1〜S-3 / S-5）はここに含めず T015 で追加する**（`SKILL.md` は Phase 3 で作られるため、ここで書くと Phase 2 の Checkpoint が満たせなくなる））
-- [ ] T008 `plugins/placement-decision-flow/tests/test_runner.sh` を作成する（`tests/` に一時的な `test_zz_probe.sh` を作成して `run.sh` を実行し、**新規に追加したテストファイルが探索されて実行される**ことを固定する。探索されない場合に失敗する。検証は一時ファイルを削除して元に戻す）
+- [X] T005 `plugins/placement-decision-flow/tests/run.sh` を作成する（`tests/test_*.sh` をディレクトリ探索で自動収集して順に実行し、成功・失敗件数を集計。失敗があれば非ゼロで終了。テスト実行ビットの確認も行う）
+- [X] T006 [P] 探索テスト用のフィクスチャを作成する。`plugins/placement-decision-flow/tests/fixtures/repo/.github/skills/code-review/SKILL.md`（`name: code-review`）と `plugins/placement-decision-flow/tests/fixtures/repo/plugins/sample-plugin/skills/sample-skill/SKILL.md`（`name: sample-skill`）。両方の `description` に `Use when:` トリガーを含め、`--query` フィルタのテストで片方だけが一致する語（例: `review`）を入れる
+- [X] T007 [P] `plugins/placement-decision-flow/tests/test_manifest.sh` を作成する（`contracts/skill-frontmatter.md` の検証規則のうち、**Phase 2 の時点で対象ファイルが存在するものだけ**を固定する。`plugin.json` の `$schema` 完全一致・`name` パターン・必須キーのみの構成（P-1〜P-6）、`plugin.json` と `marketplace.json` の `name`/`version` 一致と `source` の実在（M-1〜M-2）。**`SKILL.md` の検証（S-1〜S-3 / S-5）はここに含めず T015 で追加する**（`SKILL.md` は Phase 3 で作られるため、ここで書くと Phase 2 の Checkpoint が満たせなくなる））
+- [X] T008 `plugins/placement-decision-flow/tests/test_runner.sh` を作成する（`tests/` に一時的な `test_zz_probe.sh` を作成して `run.sh` を実行し、**新規に追加したテストファイルが探索されて実行される**ことを固定する。探索されない場合に失敗する。検証は一時ファイルを削除して元に戻す）
 
 **Checkpoint**: `bash plugins/placement-decision-flow/tests/run.sh` が動作し、T007/T008 が pass する。**Phase 2 のテストは Phase 1・2 の成果物だけで pass できること**（Phase 3 以降の成果物に依存しないこと）を確認し、ストーリー実装を開始できる
 
@@ -74,17 +74,17 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 
 > **NOTE: 実装より先に書き、失敗することを確認する**
 
-- [ ] T009 [P] [US1] `plugins/placement-decision-flow/tests/test_decide.sh` を作成する（`contracts/decide-cli.md` §7 の不変条件 C-1〜C-8 を固定する。対象は **FR-002**（選択肢が 4 値に限る）/ **FR-006**（不足時は問い返す）/ **FR-008**（同じ入力なら同じ判断）/ **FR-012**（保留のまま終わらない）/ **FR-016**（構造化入力と機械可読出力）。ガバナンス以外の 4 分類、`result=ask` と `missing`、不正な値・不明なオプション・重複指定で exit 2 と stdout 空、同じ入力の 2 回実行で stdout が byte 一致、出力に ASCII 以外が含まれないこと。**非ガバナンスのケースでは `--governance no` を明示的に渡す**。加えて、4 分類それぞれについて**完全な回答を 1 回渡すだけで `result=decision` が返る**こと（`result=ask` を経由せずに配置先が確定すること）も固定する（**SC-004a**: 1 往復で確定する）。同一のテストで **SC-001**（4/4 が 1 回で確定）/ **SC-006**（実行ディレクトリを変えても同じ出力）/ **SC-007**（不足時に推測で断定せず `result=ask` を返す）もあわせて測定する）
-- [ ] T010 [P] [US1] `plugins/placement-decision-flow/tests/test_criteria_sync.sh` を作成する（`references/criteria.md` の判断表を**ヘッダ行から列構成を動的に読み取り**、各行を `decide.sh` に流して `target` / `reason` を照合する。`*` の列には `yes` / `no` / `unknown` の 3 値を流し込み `target` が変わらないことを確認。**列が増えてもテスト本体の修正が不要な構造**にすること。これが FR-017 の強制手段になる）
-- [ ] T011 [P] [US1] `plugins/placement-decision-flow/tests/test_find_skills.sh` を作成する（`contracts/find-skills-cli.md` §7 の不変条件 F-1〜F-3 / F-5〜F-6 / F-9 を固定する。対象は **FR-009**（再利用候補の列挙）/ **FR-010**（特定のディレクトリ構成に依存しない）。フィクスチャの 2 件がタブ区切りの**リポジトリ相対パス**でパス昇順に出力される、`--query` の部分一致で絞り込まれる、0 件で exit 0 かつ stdout が空、`.github/skills/` が検出される、`.git` / `node_modules` / `tmp` が除外される、`LC_ALL` を変えてもソート順が変わらない。**SC-003**（重複配置 0 件）は「重なる既存スキルを候補として必ず列挙し、見逃さないこと」で支えるため、`.github/skills/` と `plugins/*/skills/` の両方から候補が出ることも固定する）
+- [X] T009 [P] [US1] `plugins/placement-decision-flow/tests/test_decide.sh` を作成する（`contracts/decide-cli.md` §7 の不変条件 C-1〜C-8 を固定する。対象は **FR-002**（選択肢が 4 値に限る）/ **FR-006**（不足時は問い返す）/ **FR-008**（同じ入力なら同じ判断）/ **FR-012**（保留のまま終わらない）/ **FR-016**（構造化入力と機械可読出力）。ガバナンス以外の 4 分類、`result=ask` と `missing`、不正な値・不明なオプション・重複指定で exit 2 と stdout 空、同じ入力の 2 回実行で stdout が byte 一致、出力に ASCII 以外が含まれないこと。**非ガバナンスのケースでは `--governance no` を明示的に渡す**。加えて、4 分類それぞれについて**完全な回答を 1 回渡すだけで `result=decision` が返る**こと（`result=ask` を経由せずに配置先が確定すること）も固定する（**SC-004a**: 1 往復で確定する）。同一のテストで **SC-001**（4/4 が 1 回で確定）/ **SC-006**（実行ディレクトリを変えても同じ出力）/ **SC-007**（不足時に推測で断定せず `result=ask` を返す）もあわせて測定する）
+- [X] T010 [P] [US1] `plugins/placement-decision-flow/tests/test_criteria_sync.sh` を作成する（`references/criteria.md` の判断表を**ヘッダ行から列構成を動的に読み取り**、各行を `decide.sh` に流して `target` / `reason` を照合する。`*` の列には `yes` / `no` / `unknown` の 3 値を流し込み `target` が変わらないことを確認。**列が増えてもテスト本体の修正が不要な構造**にすること。これが FR-017 の強制手段になる）
+- [X] T011 [P] [US1] `plugins/placement-decision-flow/tests/test_find_skills.sh` を作成する（`contracts/find-skills-cli.md` §7 の不変条件 F-1〜F-3 / F-5〜F-6 / F-9 を固定する。対象は **FR-009**（再利用候補の列挙）/ **FR-010**（特定のディレクトリ構成に依存しない）。フィクスチャの 2 件がタブ区切りの**リポジトリ相対パス**でパス昇順に出力される、`--query` の部分一致で絞り込まれる、0 件で exit 0 かつ stdout が空、`.github/skills/` が検出される、`.git` / `node_modules` / `tmp` が除外される、`LC_ALL` を変えてもソート順が変わらない。**SC-003**（重複配置 0 件）は「重なる既存スキルを候補として必ず列挙し、見逃さないこと」で支えるため、`.github/skills/` と `plugins/*/skills/` の両方から候補が出ることも固定する）
 
 ### Implementation for User Story 1
 
-- [ ] T012 [US1] `plugins/placement-decision-flow/skills/placement-decision-flow/references/criteria.md` に**判断表**を固定書式で作成する（[plan.md](./plan.md) の 6 列 `governance | orchestration | reusable | needs_code | target | reason` と 5 行。`*` の意味を明記。この表は T010 がパースするため書式を変えない）
-- [ ] T013 [US1] `plugins/placement-decision-flow/skills/placement-decision-flow/scripts/decide.sh` を実装する（`contracts/decide-cli.md` §1〜§6 に従う。**FR-001 / FR-016** の実装本体。`--governance` / `--orchestration` / `--reusable` / `--needs-code` の 4 オプション、`yes`/`no`/`unknown` の 3 値検証、評価順序 `governance → orchestration → reusable → needs_code` の短絡、`result=decision`（`target` / `reason` / `branches`）と `result=ask`（`missing`）の 2 分岐出力、不正入力は exit 2。**`declare -A` を使わず `case` 文で実装**し、パスは `SCRIPT_DIR` 基準で解決する。`chmod +x` する）
-- [ ] T014 [US1] `plugins/placement-decision-flow/skills/placement-decision-flow/scripts/find-skills.sh` を実装する（`contracts/find-skills-cli.md` §1〜§6 の**通常モードのみ**（`--detect-conventions` は T023）。`--root` / `--query` / `--exclude` の解決、リポジトリルートの決定（`git rev-parse --show-toplevel` → カレントディレクトリ）、除外ディレクトリの `-prune`、ドット始まりを除外しない扱い、フロントマターの `name`/`description` 抽出、`description` のタブ・改行の正規化、パス昇順ソート。`chmod +x` する）
-- [ ] T015 [US1] `plugins/placement-decision-flow/skills/placement-decision-flow/SKILL.md` を作成する（フロントマターは `contracts/skill-frontmatter.md` §2 と一致させ、`name` を親ディレクトリ名と一致させる。本文に実行手順を書く: 起動は**明示指名のみ**・文脈による自動起動をしない（FR-018 / FR-019）、自然文から 4 分岐の回答を抽出する（FR-013）、`decide.sh` を実行して AI の判断を検証し食い違えば**矛盾として提示**する（FR-014 / FR-015、基準の正はコード側）、`find-skills.sh` の候補がある場合のみ再利用を提案する（FR-009）、**複数の処理がまとめて提示された場合は 1 件ずつ `decide.sh` を実行し、独立した判断結果を返す**（`research.md` R-5。1 つの配置先に丸めない）、判断を保留したまま終わらない（FR-012）。500 行未満に収める。**あわせて `tests/test_manifest.sh` に `SKILL.md` の検証（S-1: `name` が親ディレクトリ名と一致、S-2: 名前の文字種と長さ、S-3: `description` の長さ、S-5: `Use when:` トリガーの有無）を追記して pass させる** — T007 は Phase 2 の成果物だけを検証するため、`SKILL.md` の検証はここで追加する）
-- [ ] T016 [US1] 変異探針でテストの非空虚性を実測する（`decide.sh` のガバナンス短絡を外す / `find-skills.sh` のソートを外す / `criteria.md` の 1 行を書き換える の 3 種を順に適用し、それぞれで T009〜T011 が**失敗する**ことを確認する。各変異は `/tmp` に退避して復元し、**復元後にフルスイートを再実行して全 pass に戻る**ことまでを 1 セットとする）
+- [X] T012 [US1] `plugins/placement-decision-flow/skills/placement-decision-flow/references/criteria.md` に**判断表**を固定書式で作成する（[plan.md](./plan.md) の 6 列 `governance | orchestration | reusable | needs_code | target | reason` と 5 行。`*` の意味を明記。この表は T010 がパースするため書式を変えない）
+- [X] T013 [US1] `plugins/placement-decision-flow/skills/placement-decision-flow/scripts/decide.sh` を実装する（`contracts/decide-cli.md` §1〜§6 に従う。**FR-001 / FR-016** の実装本体。`--governance` / `--orchestration` / `--reusable` / `--needs-code` の 4 オプション、`yes`/`no`/`unknown` の 3 値検証、評価順序 `governance → orchestration → reusable → needs_code` の短絡、`result=decision`（`target` / `reason` / `branches`）と `result=ask`（`missing`）の 2 分岐出力、不正入力は exit 2。**`declare -A` を使わず `case` 文で実装**し、パスは `SCRIPT_DIR` 基準で解決する。`chmod +x` する）
+- [X] T014 [US1] `plugins/placement-decision-flow/skills/placement-decision-flow/scripts/find-skills.sh` を実装する（`contracts/find-skills-cli.md` §1〜§6 の**通常モードのみ**（`--detect-conventions` は T023）。`--root` / `--query` / `--exclude` の解決、リポジトリルートの決定（`git rev-parse --show-toplevel` → カレントディレクトリ）、除外ディレクトリの `-prune`、ドット始まりを除外しない扱い、フロントマターの `name`/`description` 抽出、`description` のタブ・改行の正規化、パス昇順ソート。`chmod +x` する）
+- [X] T015 [US1] `plugins/placement-decision-flow/skills/placement-decision-flow/SKILL.md` を作成する（フロントマターは `contracts/skill-frontmatter.md` §2 と一致させ、`name` を親ディレクトリ名と一致させる。本文に実行手順を書く: 起動は**明示指名のみ**・文脈による自動起動をしない（FR-018 / FR-019）、自然文から 4 分岐の回答を抽出する（FR-013）、`decide.sh` を実行して AI の判断を検証し食い違えば**矛盾として提示**する（FR-014 / FR-015、基準の正はコード側）、`find-skills.sh` の候補がある場合のみ再利用を提案する（FR-009）、**複数の処理がまとめて提示された場合は 1 件ずつ `decide.sh` を実行し、独立した判断結果を返す**（`research.md` R-5。1 つの配置先に丸めない）、判断を保留したまま終わらない（FR-012）。500 行未満に収める。**あわせて `tests/test_manifest.sh` に `SKILL.md` の検証（S-1: `name` が親ディレクトリ名と一致、S-2: 名前の文字種と長さ、S-3: `description` の長さ、S-5: `Use when:` トリガーの有無）を追記して pass させる** — T007 は Phase 2 の成果物だけを検証するため、`SKILL.md` の検証はここで追加する）
+- [X] T016 [US1] 変異探針でテストの非空虚性を実測する（`decide.sh` のガバナンス短絡を外す / `find-skills.sh` のソートを外す / `criteria.md` の 1 行を書き換える の 3 種を順に適用し、それぞれで T009〜T011 が**失敗する**ことを確認する。各変異は `/tmp` に退避して復元し、**復元後にフルスイートを再実行して全 pass に戻る**ことまでを 1 セットとする）
 
 **Checkpoint**: `bash plugins/placement-decision-flow/tests/run.sh` が全 pass。`quickstart.md` の検証 1・3・4・5・6 が期待どおりの結果になる。US1 単独で MVP として成立する
 
@@ -106,14 +106,14 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 
 ### Tests for User Story 2
 
-- [ ] T017 [P] [US2] `plugins/placement-decision-flow/tests/fixtures/governance-cases.tsv` を作成する（`入力(TSV)\t期待target\t期待reason` の形式。ガバナンス 3 項目それぞれの代表ケース、`governance=yes` × `reusable` の 3 値、`governance=yes` × `needs_code` の 3 値、`governance=unknown` で `result=ask` になるケースを含める）
-- [ ] T018 [US2] `plugins/placement-decision-flow/tests/test_governance.sh` を作成する（**実装より先に書き、失敗することを確認**。対象は **FR-005** / **FR-021** / **FR-022**。T017 のケースを全件流し、`target` / `reason` が期待どおりであること、`governance=yes` のとき `branches` に `reusable` / `needs_code` が**現れない**こと（短絡の証明）、`missing=governance` が評価順の最初に現れることを検証。SC-002（スキルへの誤判定 0 件）と SC-010（順序依存のぶれ 0 件）を直接測る）
+- [X] T017 [P] [US2] `plugins/placement-decision-flow/tests/fixtures/governance-cases.tsv` を作成する（`入力(TSV)\t期待target\t期待reason` の形式。ガバナンス 3 項目それぞれの代表ケース、`governance=yes` × `reusable` の 3 値、`governance=yes` × `needs_code` の 3 値、`governance=unknown` で `result=ask` になるケースを含める）
+- [X] T018 [US2] `plugins/placement-decision-flow/tests/test_governance.sh` を作成する（**実装より先に書き、失敗することを確認**。対象は **FR-005** / **FR-021** / **FR-022**。T017 のケースを全件流し、`target` / `reason` が期待どおりであること、`governance=yes` のとき `branches` に `reusable` / `needs_code` が**現れない**こと（短絡の証明）、`missing=governance` が評価順の最初に現れることを検証。SC-002（スキルへの誤判定 0 件）と SC-010（順序依存のぶれ 0 件）を直接測る）
 
 ### Implementation for User Story 2
 
-- [ ] T019 [US2] `references/criteria.md` に**ガバナンスの節**を追記する（`contracts/skill-frontmatter.md` §3 の R-3。実行前検証・権限・外部接続の 3 分類、それぞれがサブエージェント定義側になる理由（エージェント定義の構造に属し、スキル側には発火の保証がない）、「使い回せるからスキル」と判断してはならないこと（FR-022）。**判断表の書式は変更しない**）
-- [ ] T020 [US2] `SKILL.md` に**ガバナンスの節**を追記する（ガバナンス該当時は `reusable` の結果にかかわらず定義側と確定することを明示。手順とガバナンスの両方の性質を持つ処理では**分割案**を示す（手順はスキル、検証・権限・接続は定義）。`spec.md` の Edge Case「複数の性質を併せ持つ処理」「ガバナンスにも該当し、かつ複数で使い回せる」に対応）
-- [ ] T021 [US2] 変異探針で T018 の非空虚性を実測する（`decide.sh` のガバナンスゲートを `orchestration` の**後ろ**に移動する、および `governance=yes` のときに `reusable` を評価するよう変更する。それぞれで T018 が**失敗する**ことを確認。復元後に**フルスイートを再実行して全 pass に戻る**ことまでを 1 セットとする）
+- [X] T019 [US2] `references/criteria.md` に**ガバナンスの節**を追記する（`contracts/skill-frontmatter.md` §3 の R-3。実行前検証・権限・外部接続の 3 分類、それぞれがサブエージェント定義側になる理由（エージェント定義の構造に属し、スキル側には発火の保証がない）、「使い回せるからスキル」と判断してはならないこと（FR-022）。**判断表の書式は変更しない**）
+- [X] T020 [US2] `SKILL.md` に**ガバナンスの節**を追記する（ガバナンス該当時は `reusable` の結果にかかわらず定義側と確定することを明示。手順とガバナンスの両方の性質を持つ処理では**分割案**を示す（手順はスキル、検証・権限・接続は定義）。`spec.md` の Edge Case「複数の性質を併せ持つ処理」「ガバナンスにも該当し、かつ複数で使い回せる」に対応）
+- [X] T021 [US2] 変異探針で T018 の非空虚性を実測する（`decide.sh` のガバナンスゲートを `orchestration` の**後ろ**に移動する、および `governance=yes` のときに `reusable` を評価するよう変更する。それぞれで T018 が**失敗する**ことを確認。復元後に**フルスイートを再実行して全 pass に戻る**ことまでを 1 セットとする）
 
 **Checkpoint**: `tests/test_governance.sh` を含む全テストが pass。ガバナンス 3 項目が
 スキルと判定される経路が存在しないことがテストで固定されている
@@ -130,14 +130,14 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 
 ### Tests for User Story 3
 
-- [ ] T022 [P] [US3] `plugins/placement-decision-flow/tests/test_conventions.sh` を作成する（**実装より先に書き、失敗することを確認**。`contracts/find-skills-cli.md` §7 の不変条件 F-4 / F-7 / F-8 を固定。常に 4 行を出力し、各行が `layer\tpath\texists` の形式であること、`exists` が `yes`/`no` のいずれかであること、`layer` → `path` の昇順であること、`--root` を一時ディレクトリに変えても結果が同じであること、実行前後で対象ツリーのハッシュが変わらないこと）
+- [X] T022 [P] [US3] `plugins/placement-decision-flow/tests/test_conventions.sh` を作成する（**実装より先に書き、失敗することを確認**。`contracts/find-skills-cli.md` §7 の不変条件 F-4 / F-7 / F-8 を固定。常に 4 行を出力し、各行が `layer\tpath\texists` の形式であること、`exists` が `yes`/`no` のいずれかであること、`layer` → `path` の昇順であること、`--root` を一時ディレクトリに変えても結果が同じであること、実行前後で対象ツリーのハッシュが変わらないこと）
 
 ### Implementation for User Story 3
 
-- [ ] T023 [US3] `find-skills.sh` に `--detect-conventions` モードを実装する（`contracts/find-skills-cli.md` §3.2。`skill`: `.github/skills/`・`plugins/*/skills/`、`subagent`: `.github/agents/`・`.claude/agents/` の 4 件を実在確認して**常に 4 行**出力する。`layer` → `path` の昇順。T022 が pass することを確認）
-- [ ] T024 [US3] `references/criteria.md` に**解説の節**を追記する（`contracts/skill-frontmatter.md` §3 の R-1 / R-5。評価順序がこの順である理由（ガバナンスを先に置くのは発火の保証を最優先にするため）、`*` が「その列を評価しない」を意味すること、主要な公式設計（Anthropic / OpenAI / Microsoft / Google ADK / LangGraph）の指針と矛盾しないことの説明（FR-011））
-- [ ] T025 [US3] `SKILL.md` に**提示フォーマットの節**を追記する（`research.md` R-4。`decide.sh` の `key=value` を日本語の文章として提示し、**適用した分岐と理由**を含める（FR-004 / SC-005）、配置先がスキルのときは**手順は `SKILL.md`・実行コードは `scripts/`** の区別を明示する（FR-003）、`--detect-conventions` の結果に沿った**リポジトリ相対パス**を示し、検出できない場合は役割と目安を併記する（FR-007 / FR-020）。**リポジトリ外のパスを示さない**ことを明記する）
-- [ ] T026 [US3] 変異探針で T022 の非空虚性を実測する（`plugins/placement-decision-flow/skills/placement-decision-flow/scripts/find-skills.sh` の `--detect-conventions` について、(a) `exists` 判定を常に `yes` に固定する、(b) 出力を 3 行に減らす、の 2 種を順に適用し、それぞれで T022 が**失敗する**ことを確認する。各変異は `/tmp` に退避して復元し、**復元後にフルスイートを再実行して全 pass に戻る**ことまでを 1 セットとする）
+- [X] T023 [US3] `find-skills.sh` に `--detect-conventions` モードを実装する（`contracts/find-skills-cli.md` §3.2。`skill`: `.github/skills/`・`plugins/*/skills/`、`subagent`: `.github/agents/`・`.claude/agents/` の 4 件を実在確認して**常に 4 行**出力する。`layer` → `path` の昇順。T022 が pass することを確認）
+- [X] T024 [US3] `references/criteria.md` に**解説の節**を追記する（`contracts/skill-frontmatter.md` §3 の R-1 / R-5。評価順序がこの順である理由（ガバナンスを先に置くのは発火の保証を最優先にするため）、`*` が「その列を評価しない」を意味すること、主要な公式設計（Anthropic / OpenAI / Microsoft / Google ADK / LangGraph）の指針と矛盾しないことの説明（FR-011））
+- [X] T025 [US3] `SKILL.md` に**提示フォーマットの節**を追記する（`research.md` R-4。`decide.sh` の `key=value` を日本語の文章として提示し、**適用した分岐と理由**を含める（FR-004 / SC-005）、配置先がスキルのときは**手順は `SKILL.md`・実行コードは `scripts/`** の区別を明示する（FR-003）、`--detect-conventions` の結果に沿った**リポジトリ相対パス**を示し、検出できない場合は役割と目安を併記する（FR-007 / FR-020）。**リポジトリ外のパスを示さない**ことを明記する）
+- [X] T026 [US3] 変異探針で T022 の非空虚性を実測する（`plugins/placement-decision-flow/skills/placement-decision-flow/scripts/find-skills.sh` の `--detect-conventions` について、(a) `exists` 判定を常に `yes` に固定する、(b) 出力を 3 行に減らす、の 2 種を順に適用し、それぞれで T022 が**失敗する**ことを確認する。各変異は `/tmp` に退避して復元し、**復元後にフルスイートを再実行して全 pass に戻る**ことまでを 1 セットとする）
 
 **Checkpoint**: `quickstart.md` の検証 7 が期待どおりになり、US1・US2・US3 がそれぞれ独立に成立する
 
@@ -147,14 +147,14 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 
 **Purpose**: 複数ストーリーにまたがる確認と仕上げ
 
-- [ ] T027 [P] `plugins/placement-decision-flow/README.md` に利用方法を追記する（`SKILL.md` の起動が**明示指名のみ**であること、`decide.sh` / `find-skills.sh` の役割、`references/criteria.md` を判断基準の正とすることを記載）
-- [ ] T028 `quickstart.md` の検証 1〜11 を順に実行し、各検証の実際の出力を記録する（期待結果と異なる箇所は、実装を直すか `quickstart.md` を直すかを判断して反映する）
-- [ ] T029 `plugins/placement-decision-flow/tests/test_criteria_sync.sh` が**判断表の変更を実際に検出する**ことを最終確認する（`criteria.md` の `target` を 1 つ書き換えて失敗することを確認し、復元後にフルスイートが全 pass に戻ることを確認。FR-017 の実効性の最終的な裏付け）
-- [ ] T030 `bash plugins/placement-decision-flow/tests/run.sh` でフルスイートを実行し、全テストが pass することを確認する（T016 / T021 / T026 / T029 / T033 の変異が残っていないことを `git status` と `git diff` で確認してから実行する）
-- [ ] T031 [P] `SKILL.md` の最終確認を行う（500 行未満、資材への参照がスキルルートからの相対パスで 1 階層まで、`description` に `Use when:` トリガーがあること、`name` が親ディレクトリ名と一致することを確認。`tests/test_manifest.sh` が pass する）
-- [ ] T032 [P] `plugin.json` と `.github/plugin/marketplace.json` の整合を最終確認する（`name` / `version` / `source` の一致。既存 2 プラグインのエントリが変更されていないことを `git diff` で確認）
-- [ ] T033 `plugins/placement-decision-flow/tests/test_constitution.sh` を作成する（**憲章 I / VII の実装規律を機械的に固定する**。配布スクリプト `decide.sh` / `find-skills.sh` に `declare -A` が含まれないこと（bash 3.2 互換・憲章 VII）、`../../` によるプラグイン境界の越境参照が無いこと（憲章 I）、環境固有の絶対パス（`/home/` `/Users/` など）が埋め込まれていないこと（憲章 VII）、両スクリプトが `SCRIPT_DIR` 基準で自身の位置を解決していること（憲章 I）。**変異探針**: `decide.sh` に `declare -A` を 1 行挿入すると失敗することを実測し、復元後にフルスイートが全 pass に戻ることを確認する）
-- [ ] T034 `plugins/placement-decision-flow/tests/test_performance.sh` を作成する（**SC-004a / SC-004b を実測可能な形で固定する**。SC-004b: `decide.sh` の実行時間を秒精度で計測し 1 秒未満であることを固定する。SC-004a: 4 分類それぞれの**完全な入力**を 1 回だけ渡したときに `result=decision` が返ること、すなわち追加の問い返し 0 回で配置先が確定することを固定する。`result=ask` を許容するのは回答に `unknown` を含むケースだけに限り、それ以外で `result=ask` が返れば失敗させる）
+- [X] T027 [P] `plugins/placement-decision-flow/README.md` に利用方法を追記する（`SKILL.md` の起動が**明示指名のみ**であること、`decide.sh` / `find-skills.sh` の役割、`references/criteria.md` を判断基準の正とすることを記載）
+- [X] T028 `quickstart.md` の検証 1〜11 を順に実行し、各検証の実際の出力を記録する（期待結果と異なる箇所は、実装を直すか `quickstart.md` を直すかを判断して反映する）
+- [X] T029 `plugins/placement-decision-flow/tests/test_criteria_sync.sh` が**判断表の変更を実際に検出する**ことを最終確認する（`criteria.md` の `target` を 1 つ書き換えて失敗することを確認し、復元後にフルスイートが全 pass に戻ることを確認。FR-017 の実効性の最終的な裏付け）
+- [X] T030 `bash plugins/placement-decision-flow/tests/run.sh` でフルスイートを実行し、全テストが pass することを確認する（T016 / T021 / T026 / T029 / T033 の変異が残っていないことを `git status` と `git diff` で確認してから実行する）
+- [X] T031 [P] `SKILL.md` の最終確認を行う（500 行未満、資材への参照がスキルルートからの相対パスで 1 階層まで、`description` に `Use when:` トリガーがあること、`name` が親ディレクトリ名と一致することを確認。`tests/test_manifest.sh` が pass する）
+- [X] T032 [P] `plugin.json` と `.github/plugin/marketplace.json` の整合を最終確認する（`name` / `version` / `source` の一致。既存 2 プラグインのエントリが変更されていないことを `git diff` で確認）
+- [X] T033 `plugins/placement-decision-flow/tests/test_constitution.sh` を作成する（**憲章 I / VII の実装規律を機械的に固定する**。配布スクリプト `decide.sh` / `find-skills.sh` に `declare -A` が含まれないこと（bash 3.2 互換・憲章 VII）、`../../` によるプラグイン境界の越境参照が無いこと（憲章 I）、環境固有の絶対パス（`/home/` `/Users/` など）が埋め込まれていないこと（憲章 VII）、両スクリプトが `SCRIPT_DIR` 基準で自身の位置を解決していること（憲章 I）。**変異探針**: `decide.sh` に `declare -A` を 1 行挿入すると失敗することを実測し、復元後にフルスイートが全 pass に戻ることを確認する）
+- [X] T034 `plugins/placement-decision-flow/tests/test_performance.sh` を作成する（**SC-004a / SC-004b を実測可能な形で固定する**。SC-004b: `decide.sh` の実行時間を秒精度で計測し 1 秒未満であることを固定する。SC-004a: 4 分類それぞれの**完全な入力**を 1 回だけ渡したときに `result=decision` が返ること、すなわち追加の問い返し 0 回で配置先が確定することを固定する。`result=ask` を許容するのは回答に `unknown` を含むケースだけに限り、それ以外で `result=ask` が返れば失敗させる）
 
 ---
 
@@ -166,9 +166,9 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 > **AI の振る舞い**であり、シェルスクリプトのテストでは固定できない。`quickstart.md` の手順に
 > 従って人手で確認し、観測結果を記録する（憲章 IV: 主張には観測結果を添える）。
 
-- [ ] T035 `quickstart.md` の**検証 12** を実行する（**指名なしでは起動しない**。判断が必要そうな文脈を含む別の作業依頼を投げ、判断フローが自動起動せず作業が中断されないことを確認する。FR-018 / FR-019 / SC-009）
-- [ ] T036 `quickstart.md` の**検証 13** を実行する（**矛盾が提示される**。`decide.sh` の結論と異なる配置先を AI が結論した状況を作り、黙って一方を採用せず矛盾として提示されることを確認する。FR-015 / SC-008）
-- [ ] T037 [P] T035 / T036 の観測結果を `quickstart.md` の「人手確認の記録」に追記する（確認した入力・観測した挙動・判定を残す）
+- [X] T035 `quickstart.md` の**検証 12** を実行する（**指名なしでは起動しない**。判断が必要そうな文脈を含む別の作業依頼を投げ、判断フローが自動起動せず作業が中断されないことを確認する。FR-018 / FR-019 / SC-009）
+- [X] T036 `quickstart.md` の**検証 13** を実行する（**矛盾が提示される**。`decide.sh` の結論と異なる配置先を AI が結論した状況を作り、黙って一方を採用せず矛盾として提示されることを確認する。FR-015 / SC-008）
+- [X] T037 [P] T035 / T036 の観測結果を `quickstart.md` の「人手確認の記録」に追記する（確認した入力・観測した挙動・判定を残す）
 
 ---
 
