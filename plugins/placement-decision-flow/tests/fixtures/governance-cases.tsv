@@ -1,0 +1,40 @@
+# governance-cases.tsv — ガバナンス判定のケース表（US2 / FR-005 / FR-021 / FR-022）
+#
+# 形式（タブ区切り・9 列。`#` で始まる行と空行は無視する）:
+#   governance	orchestration	reusable	needs_code	expected_result	expected_target	expected_reason	expected_missing	note
+#
+# `-` は「その項目が出力されないこと」を意味する（result=decision なら missing は出ない、
+# result=ask なら target / reason は出ない）。
+#
+# 対象: FR-005（ガバナンス項目はサブエージェント定義側）/ FR-021（評価順序の固定）/
+#       FR-022（再利用できることを理由にスキルへ流さない）/ SC-002 / SC-010
+
+# ---------- ガバナンス 3 項目の代表ケース（実行前検証・権限・外部接続） ----------
+
+yes	no	no	no	decision	subagent-definition	governance	-	実行前検証（秘密情報の検査）
+yes	no	yes	yes	decision	subagent-definition	governance	-	権限（ツール実行の許可）＋使い回せる＋コード要
+yes	yes	yes	yes	decision	subagent-definition	governance	-	外部接続（API 呼び出し）。分解を伴っても governance が先
+
+# ---------- governance=yes × reusable の 3 値（FR-022） ----------
+
+yes	no	no	no	decision	subagent-definition	governance	-	reusable=no
+yes	no	yes	no	decision	subagent-definition	governance	-	reusable=yes でもスキルに流れない
+yes	no	unknown	no	decision	subagent-definition	governance	-	reusable=unknown
+
+# ---------- governance=yes × needs_code の 3 値 ----------
+
+yes	no	no	no	decision	subagent-definition	governance	-	needs_code=no
+yes	no	no	yes	decision	subagent-definition	governance	-	needs_code=yes でも定義側
+yes	no	no	unknown	decision	subagent-definition	governance	-	needs_code=unknown
+
+# ---------- governance=unknown は評価順の最初で問い返す（FR-021） ----------
+
+unknown	no	no	no	ask	-	-	governance	governance=unknown は最初に問い返す
+unknown	yes	yes	yes	ask	-	-	governance	後続が確定していても最初の不明は governance
+unknown	unknown	unknown	unknown	ask	-	-	governance	すべて未回答
+
+# ---------- 対照: ガバナンスに該当しない場合だけスキルへ流れる（SC-002） ----------
+
+no	no	yes	yes	decision	skill-scripts	reusable-with-code	-	ガバナンスなし＋使い回す＋コード要 → スキルの実行コード
+no	no	yes	no	decision	skill-instructions	reusable-instructions	-	ガバナンスなし＋使い回す＋コード不要 → スキルの手順
+no	yes	no	no	decision	orchestrator	orchestration	-	ガバナンスなし＋分解・委任 → オーケストレーター
