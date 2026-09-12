@@ -171,7 +171,37 @@ bash plugins/placement-decision-flow/tests/run.sh
 
 **この検証の意味**: 判断表の行を書き換えたり削除したりすると、`decide.sh` を変えていなければ
 テストが失敗する。これが FR-017（手順記述とコードの同期）の強制手段になっている。
-さらに **SC-006**（同じ入力に対して別のセッション・別のプロジェクトでも同じ判断）を、
+この実効性は、判断表の `target` を 1 つ書き換える探針で確かめられる（T029 で実測済み）。
+
+```bash
+cd /home/takumi/github/copilot-plugins-marketplace
+C=plugins/placement-decision-flow/skills/placement-decision-flow/references/criteria.md
+cp "$C" /tmp/criteria.bak
+sha_before=$(sha256sum "$C" | cut -d' ' -f1)
+
+# 判断表 1 行目の target を書き換える（decide.sh は変えない）
+python3 - <<'EOF'
+p = "plugins/placement-decision-flow/skills/placement-decision-flow/references/criteria.md"
+s = open(p, encoding="utf-8").read()
+old = "| yes | * | * | * | subagent-definition | governance |"
+new = "| yes | * | * | * | skill-instructions | governance |"
+assert s.count(old) == 1, s.count(old)
+open(p, "w", encoding="utf-8").write(s.replace(old, new))
+EOF
+bash plugins/placement-decision-flow/tests/run.sh 2>&1 | tail -5
+
+# 復元（sha256 の一致まで確かめる）
+cp /tmp/criteria.bak "$C"
+[ "$sha_before" = "$(sha256sum "$C" | cut -d' ' -f1)" ] && echo "OK: 復元（sha256 一致）"
+bash plugins/placement-decision-flow/tests/run.sh | tail -3
+```
+
+**実測（T029）**: 変異中は `test_criteria_sync.sh` が
+`NG: 判断表 1 行目: skill-instructions / governance に一致しない` を出して終了コード非 0
+（`tests/run.sh` は終了コードで合否を決めるため `PASS: 6 FAIL: 1`）。復元後は `PASS: 7 FAIL: 0`。
+`criteria.md` を書き換えただけでは `decide.sh` は変わらない、という前提が効いている。
+
+**さらに SC-006**（同じ入力に対して別のセッション・別のプロジェクトでも同じ判断）を、
 実行ディレクトリを変えても出力が変わらないことで確かめる。
 
 ```bash
