@@ -42,7 +42,7 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 - [X] T001 `plugins/placement-decision-flow/` 配下のディレクトリ構造を作成する（`skills/placement-decision-flow/scripts/`、`skills/placement-decision-flow/references/`、`tests/fixtures/repo/.github/skills/code-review/`、`tests/fixtures/repo/plugins/sample-plugin/skills/sample-skill/`）
 - [X] T002 [P] `plugins/placement-decision-flow/plugin.json` を作成する（`contracts/skill-frontmatter.md` §1 と完全一致させる。`$schema` / `name: placement-decision-flow` / `version: 1.0.0` / `description` / `author` のみ。閉じたスキーマのため他キーを追加しない）
 - [X] T003 [P] `plugins/placement-decision-flow/README.md` を作成する（プラグインの目的、前提条件（bash 3.2+ / `git` / `find`・`sed`・`grep`・`sort`、追加依存なし・ネットワーク不要）、`tests/run.sh` の実行方法、`chmod +x` の必要性を記載）
-- [ ] T004 `.github/plugin/marketplace.json` の `plugins` 配列に `placement-decision-flow` のエントリを追加する（`source: plugins/placement-decision-flow`、`version: 1.0.0`。既存 2 エントリは変更せず、`name` 昇順の並びを保つ）
+- [X] T004 `.github/plugin/marketplace.json` の `plugins` 配列に `placement-decision-flow` のエントリを追加する（`source: plugins/placement-decision-flow`、`version: 1.0.0`。既存 2 エントリは変更せず、`name` 昇順の並びを保つ）
 
 ---
 
