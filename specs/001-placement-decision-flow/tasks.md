@@ -130,7 +130,7 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 
 ### Tests for User Story 3
 
-- [ ] T022 [P] [US3] `plugins/placement-decision-flow/tests/test_conventions.sh` を作成する（**実装より先に書き、失敗することを確認**。`contracts/find-skills-cli.md` §7 の不変条件 F-4 / F-7 / F-8 を固定。常に 4 行を出力し、各行が `layer\tpath\texists` の形式であること、`exists` が `yes`/`no` のいずれかであること、`layer` → `path` の昇順であること、`--root` を一時ディレクトリに変えても結果が同じであること、実行前後で対象ツリーのハッシュが変わらないこと）
+- [X] T022 [P] [US3] `plugins/placement-decision-flow/tests/test_conventions.sh` を作成する（**実装より先に書き、失敗することを確認**。`contracts/find-skills-cli.md` §7 の不変条件 F-4 / F-7 / F-8 を固定。常に 4 行を出力し、各行が `layer\tpath\texists` の形式であること、`exists` が `yes`/`no` のいずれかであること、`layer` → `path` の昇順であること、`--root` を一時ディレクトリに変えても結果が同じであること、実行前後で対象ツリーのハッシュが変わらないこと）
 
 ### Implementation for User Story 3
 
