@@ -387,3 +387,19 @@ AI 側の手順に属し、機械的なテストでは固定できない。
 |---|---|---|---|
 | 検証 9 | `jq -S` でマニフェストを比較 | `jq` を必要としない `tests/test_manifest.sh` で同じ内容を確認 | 前提条件に「追加依存なし」を掲げているが `jq` は環境に無く、検証が実行できなかった（`jq: 未インストール`）。M-1 / M-2 が name / version / source の一致を固定している |
 | 検証 10 | `s.replace("governance", "govX", 1)`（最初の出現を置換） | governance=yes の短絡（`exit 0`）を除去 | 最初の `governance` は 4 行目のコメントにあり、置換しても挙動が変わらず **`PASS: 7 FAIL: 0` のまま**で探針が空虚だった。挙動を変える行に当て替えて `FAIL: 3` を観測した |
+
+### フルスイートの内訳（T030）
+
+`git status` と `git diff` が空である（T016 / T021 / T026 / T029 の変異が残っていない）ことを
+確認してから実行した。合計 209 チェック、`tests/run.sh` の終了コードは 0。
+
+| テスト | チェック数 | 結果 |
+|---|---|---|
+| `test_conventions.sh` | 14 | PASS |
+| `test_criteria_sync.sh` | 9 | PASS |
+| `test_decide.sh` | 57 | PASS |
+| `test_find_skills.sh` | 19 | PASS |
+| `test_governance.sh` | 78 | PASS |
+| `test_manifest.sh` | 20 | PASS |
+| `test_runner.sh` | 12 | PASS |
+| **合計** | **209** | `PASS: 7 FAIL: 0` |
