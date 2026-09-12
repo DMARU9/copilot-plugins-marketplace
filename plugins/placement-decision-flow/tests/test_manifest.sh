@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# test_manifest.sh — マニフェスト契約の検証（contracts/skill-frontmatter.md §1 / §4）
+# test_manifest.sh — マニフェスト契約の検証（contracts/skill-frontmatter.md §1 / §2 / §4）
 #
-# Phase 2 の時点で対象ファイルが存在する規則のみを固定する:
+# 固定する規則:
 #   P-1 〜 P-6 : plugins/placement-decision-flow/plugin.json
+#   S-1 〜 S-3 / S-5 : skills/placement-decision-flow/SKILL.md のフロントマター
 #   M-1 〜 M-2 : .github/plugin/marketplace.json の登録エントリ
-# SKILL.md の規則（S-1 〜 S-3 / S-5）は SKILL.md が作られる T015 で追加する。
 #
-# jq などの追加依存を使わず、grep / awk / sed だけで JSON を読む（憲章 VII）。
+# jq などの追加依存を使わず、grep / awk / sed だけで JSON / YAML を読む（憲章 VII）。
 
 set -uo pipefail
 
@@ -17,6 +17,8 @@ REPO_ROOT=$(cd "$PLUGIN_DIR/../.." && pwd)
 PLUGIN_JSON="$PLUGIN_DIR/plugin.json"
 MARKETPLACE="$REPO_ROOT/.github/plugin/marketplace.json"
 PLUGIN_NAME="placement-decision-flow"
+SKILL_DIR="$PLUGIN_DIR/skills/$PLUGIN_NAME"
+SKILL_MD="$SKILL_DIR/SKILL.md"
 
 pass=0
 fail=0
@@ -63,6 +65,20 @@ top_level_keys() {
         sub(/".*$/, "", line)
         print line
     }' "$1" | LC_ALL=C sort
+}
+
+# YAML フロントマター（先頭の --- と --- の間）だけを取り出す
+frontmatter() {
+    awk 'NR == 1 && $0 == "---" { inblock = 1; next }
+         inblock && $0 == "---" { exit }
+         inblock { print }' "$1"
+}
+
+# フロントマターから 1 キーの値を取り出す（先頭の一致のみ・引用符を外す）
+# 使い方: frontmatter_value <キー> <ファイル>
+frontmatter_value() {
+    frontmatter "$2" | sed -n "s/^$1:[[:space:]]*//p" | head -1 |
+        sed "s/^'//; s/'$//; s/^\"//; s/\"$//"
 }
 
 echo "=== test_manifest.sh ==="
@@ -139,6 +155,53 @@ fi
 expected_keys=$(printf '%s\n' '$schema' 'name' 'version' 'description' 'author' | LC_ALL=C sort)
 actual_keys=$(top_level_keys "$PLUGIN_JSON")
 eq "P-6 トップレベルキーが定義済みの 5 つだけ" "$expected_keys" "$actual_keys"
+
+# ---------- S-1 〜 S-3 / S-5: SKILL.md のフロントマター ----------
+
+if [ ! -f "$SKILL_MD" ]; then
+    ng "S-1 SKILL.md が存在する（$SKILL_MD）"
+else
+    skill_name=$(frontmatter_value 'name' "$SKILL_MD")
+    skill_description=$(frontmatter_value 'description' "$SKILL_MD")
+    skill_dirname=$(basename "$SKILL_DIR")
+
+    # S-1: name は親ディレクトリ名と完全一致
+    eq "S-1 SKILL.md の name が親ディレクトリ名と一致" "$skill_dirname" "$skill_name"
+
+    # S-2: 文字種と長さ
+    skill_name_len=${#skill_name}
+    if [ "$skill_name_len" -ge 1 ] && [ "$skill_name_len" -le 64 ]; then
+        ok "S-2 name の長さが 1〜64 文字（$skill_name_len）"
+    else
+        ng "S-2 name の長さが 1〜64 文字（実際: $skill_name_len）"
+    fi
+
+    if printf '%s' "$skill_name" | grep -Eq '^[a-z0-9]([a-z0-9-]*[a-z0-9])?$'; then
+        ok "S-2 name の文字種（小文字英数字とハイフンのみ・先頭末尾は英数字）"
+    else
+        ng "S-2 name の文字種（実際: $skill_name）"
+    fi
+
+    case "$skill_name" in
+        *--*) ng "S-2 name に '--' を含まない（実際: $skill_name）" ;;
+        *) ok "S-2 name に '--' を含まない" ;;
+    esac
+
+    # S-3: description は 1〜1024 文字
+    skill_description_len=${#skill_description}
+    if [ "$skill_description_len" -ge 1 ] && [ "$skill_description_len" -le 1024 ]; then
+        ok "S-3 description の長さが 1〜1024 文字（$skill_description_len）"
+    else
+        ng "S-3 description の長さが 1〜1024 文字（実際: $skill_description_len）"
+    fi
+
+    # S-5: description に英語トリガー `Use when:` を含む
+    if printf '%s' "$skill_description" | grep -qF 'Use when:'; then
+        ok "S-5 description に 'Use when:' トリガーがある"
+    else
+        ng "S-5 description に 'Use when:' トリガーがある（実際: $skill_description）"
+    fi
+fi
 
 # ---------- M-1 / M-2: marketplace.json との整合 ----------
 
