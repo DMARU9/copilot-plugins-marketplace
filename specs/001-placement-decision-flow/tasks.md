@@ -50,7 +50,7 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 
 **Purpose**: すべてのストーリーが依存するテスト基盤。**このフェーズが完了するまでストーリー実装を開始しない**
 
-- [ ] T005 `plugins/placement-decision-flow/tests/run.sh` を作成する（`tests/test_*.sh` をディレクトリ探索で自動収集して順に実行し、成功・失敗件数を集計。失敗があれば非ゼロで終了。テスト実行ビットの確認も行う）
+- [X] T005 `plugins/placement-decision-flow/tests/run.sh` を作成する（`tests/test_*.sh` をディレクトリ探索で自動収集して順に実行し、成功・失敗件数を集計。失敗があれば非ゼロで終了。テスト実行ビットの確認も行う）
 - [ ] T006 [P] 探索テスト用のフィクスチャを作成する。`plugins/placement-decision-flow/tests/fixtures/repo/.github/skills/code-review/SKILL.md`（`name: code-review`）と `plugins/placement-decision-flow/tests/fixtures/repo/plugins/sample-plugin/skills/sample-skill/SKILL.md`（`name: sample-skill`）。両方の `description` に `Use when:` トリガーを含め、`--query` フィルタのテストで片方だけが一致する語（例: `review`）を入れる
 - [ ] T007 [P] `plugins/placement-decision-flow/tests/test_manifest.sh` を作成する（`contracts/skill-frontmatter.md` の検証規則のうち、**Phase 2 の時点で対象ファイルが存在するものだけ**を固定する。`plugin.json` の `$schema` 完全一致・`name` パターン・必須キーのみの構成（P-1〜P-6）、`plugin.json` と `marketplace.json` の `name`/`version` 一致と `source` の実在（M-1〜M-2）。**`SKILL.md` の検証（S-1〜S-3 / S-5）はここに含めず T015 で追加する**（`SKILL.md` は Phase 3 で作られるため、ここで書くと Phase 2 の Checkpoint が満たせなくなる））
 - [ ] T008 `plugins/placement-decision-flow/tests/test_runner.sh` を作成する（`tests/` に一時的な `test_zz_probe.sh` を作成して `run.sh` を実行し、**新規に追加したテストファイルが探索されて実行される**ことを固定する。探索されない場合に失敗する。検証は一時ファイルを削除して元に戻す）
