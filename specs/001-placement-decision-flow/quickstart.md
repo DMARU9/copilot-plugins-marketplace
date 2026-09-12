@@ -331,11 +331,17 @@ AI 側の手順に属し、機械的なテストでは固定できない。
 
 | 検証 | 実施日 | 入力 | 観測した挙動 | 判定 |
 |---|---|---|---|---|
-| 12 | （記入） | （記入） | （記入） | （記入） |
-| 13 | （記入） | （記入） | （記入） | （記入） |
+| 12 | 2026-09-12 | (1) 指名なし: 「`/tmp/placement-probe` に Markdown の見出しレベルの飛びを検査する仕組みを追加して」(2) 明示指名: 「コミットメッセージを規約に沿って検査する処理をどこに置くべきか判断して」 | (1) 判断フローは起動せず（4 つの質問の提示も `decide.sh` の実行も無し）、依頼どおり `check-headings.sh` を 1 本のスクリプトとして作成して実行し `exit=1` を確認。作業は中断せず、リポジトリ本体は `git status` が空のまま (2) 4 つの質問を提示 → `decide.sh` を実行 → `target=skill-scripts` / `reason=reusable-with-code` / `branches=governance=no,orchestration=no,reusable=yes,needs_code=yes`（`exit=0`） | PASS |
+| 13 | 2026-09-12 | 「外部 API に HTTPS で問い合わせる処理を、再利用できるスキルとして置きたい」（明示指名） | 片方を黙って採用せず、**AI の結論**（再利用できるので `skill-scripts`）と**判定コードの結論**（`decide.sh --governance yes --reusable yes --needs-code yes` → `target=subagent-definition` / `reason=governance` / `branches=governance=yes`）の両方、および採用した基準（`references/criteria.md` の判断表と評価順序を正とする）を並べて提示した | PASS |
 
 > **SC-008 / SC-009 は機械的に測れないため、この記録が無い限り当該 Success Criterion は
 > 未検証として扱う**（憲章 IV: 主張には観測結果を添える）。
+
+> **観測の限界（憲章 IV）**: 検証 12・13 の観測は**同一セッション・同一モデルでの自己観測**
+> である。別セッション・別モデル・別クライアントでの再現は未確認であり、判断フローの起動が
+> `description` の `Use when:` による読み込みではなく `SKILL.md` の「起動条件（明示指名のみ）」
+> に従うこと、矛盾の提示がスキル本文の「5. 食い違えば矛盾提示」という手順記述に依存することは、
+> 機械的なテストでは固定できていない（`tests/` に該当するテストは無く、この記録だけが根拠）。
 
 ---
 
