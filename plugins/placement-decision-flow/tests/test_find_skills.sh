@@ -182,6 +182,51 @@ else
     ok "--exclude で追加の除外ディレクトリを指定できる"
 fi
 
+# ---------- F-4: 出力は探索順ではなくパス昇順にソートされる ----------
+#
+# フィクスチャ 2 件ではファイルシステムの巡回順がたまたま昇順と一致し、ソートの有無を
+# 区別できない（= この節が空虚になる）。候補を 6 件用意し、さらに「探索順そのものが
+# 昇順ではない」ことも確認して、ソートの有無を区別できるフィクスチャであることを固定する。
+
+SORTED_ROOT=$(mktemp -d)
+TMP_DIRS="$TMP_DIRS $SORTED_ROOT"
+
+# 巡回順が昇順になりにくいよう、意図的に逆順で作成する（挿入順を保つ FS でも区別できる）
+for name in zeta yankee xray whiskey victor uniform; do
+    mkdir -p "$SORTED_ROOT/$name"
+    printf -- '---\nname: %s\ndescription: %s の説明\n---\n' "$name" "$name" \
+        > "$SORTED_ROOT/$name/SKILL.md"
+done
+
+expected_sorted=$(
+    for name in uniform victor whiskey xray yankee zeta; do
+        printf '%s\t%s\t%s の説明\n' "$name/SKILL.md" "$name" "$name"
+    done
+)
+
+# ファイルシステムの巡回順（find-skills.sh と同じ探索式・除外対象なし）
+discovery_order=$(
+    find "$SORTED_ROOT" -type f -name 'SKILL.md' -print 2>/dev/null |
+        while IFS= read -r found; do
+            printf '%s\n' "${found#"$SORTED_ROOT"/}"
+        done
+)
+discovery_sorted=$(printf '%s\n' "$discovery_order" | LC_ALL=C sort)
+
+if [ "$discovery_order" != "$discovery_sorted" ]; then
+    ok "F-4 探索順が昇順と一致しない（ソートの有無を区別できるフィクスチャ）"
+else
+    ng "F-4 探索順が昇順と一致しており、ソートの有無を区別できない（空虚なフィクスチャ）"
+fi
+
+sorted_out=$(run_find --root "$SORTED_ROOT")
+
+if [ "$sorted_out" = "$expected_sorted" ]; then
+    ok "F-4 6 件が探索順ではなくパス昇順で出力される"
+else
+    ng "F-4 出力がパス昇順でない（実際: [$(printf '%s' "$sorted_out" | tr '\n' '|')]）"
+fi
+
 # ---------- F-9: ソート順が LC_ALL に依存しない（憲章 VII） ----------
 
 sort_a=$(LC_ALL=C bash "$FIND" --root "$FIXTURE" 2>/dev/null)
