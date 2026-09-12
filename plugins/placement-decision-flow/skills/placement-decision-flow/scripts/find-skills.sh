@@ -34,6 +34,7 @@ Options:
   --root <dir>          探索の起点（既定: git リポジトリルート、git でなければカレントディレクトリ）
   --query <text>        name または description への部分一致フィルタ（大文字小文字を区別しない）
   --exclude <name>      追加の除外ディレクトリ名（複数回指定可）
+  --detect-conventions  スキル候補の代わりに慣習ディレクトリの実在確認を出力する
   -h, --help            この使用方法を表示する
 USAGE
 }
@@ -64,6 +65,10 @@ while [ $# -gt 0 ]; do
             extra_excludes="$extra_excludes $2"
             shift 2
             ;;
+        --detect-conventions)
+            detect_conventions=1
+            shift
+            ;;
         -h|--help)
             usage
             exit 0
@@ -89,6 +94,34 @@ else
 fi
 
 root_abs=$(CDPATH= cd -- "$root" && pwd) || die 3 "ルートディレクトリを解決できません: $root"
+
+# ---------- 慣習検出モード（--detect-conventions / FR-007 / FR-010） ----------
+#
+# 候補を列挙する代わりに、慣習ディレクトリが実在するかを報告する。存在しないものも
+# `no` として出力する（存在しないこと自体が利用者にとっての情報になるため）。
+
+if [ "$detect_conventions" -eq 1 ]; then
+    exists_of() { # $1=リポジトリ相対パス。glob を含む場合は 1 つでも実在すれば yes
+        local candidate
+        for candidate in "$root_abs"/$1; do
+            if [ -d "$candidate" ]; then
+                printf 'yes'
+                return 0
+            fi
+        done
+        printf 'no'
+        return 0
+    }
+
+    {
+        printf 'skill\t%s\t%s\n' '.github/skills/' "$(exists_of '.github/skills/')"
+        printf 'skill\t%s\t%s\n' 'plugins/*/skills/' "$(exists_of 'plugins/*/skills/')"
+        printf 'subagent\t%s\t%s\n' '.claude/agents/' "$(exists_of '.claude/agents/')"
+        printf 'subagent\t%s\t%s\n' '.github/agents/' "$(exists_of '.github/agents/')"
+    } | LC_ALL=C sort
+
+    exit 0
+fi
 
 # ---------- フロントマターの読み取り ----------
 

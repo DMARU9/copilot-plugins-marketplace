@@ -134,7 +134,7 @@ description: "Task list for スキルとエージェントの配置判断フロ�
 
 ### Implementation for User Story 3
 
-- [ ] T023 [US3] `find-skills.sh` に `--detect-conventions` モードを実装する（`contracts/find-skills-cli.md` §3.2。`skill`: `.github/skills/`・`plugins/*/skills/`、`subagent`: `.github/agents/`・`.claude/agents/` の 4 件を実在確認して**常に 4 行**出力する。`layer` → `path` の昇順。T022 が pass することを確認）
+- [X] T023 [US3] `find-skills.sh` に `--detect-conventions` モードを実装する（`contracts/find-skills-cli.md` §3.2。`skill`: `.github/skills/`・`plugins/*/skills/`、`subagent`: `.github/agents/`・`.claude/agents/` の 4 件を実在確認して**常に 4 行**出力する。`layer` → `path` の昇順。T022 が pass することを確認）
 - [ ] T024 [US3] `references/criteria.md` に**解説の節**を追記する（`contracts/skill-frontmatter.md` §3 の R-1 / R-5。評価順序がこの順である理由（ガバナンスを先に置くのは発火の保証を最優先にするため）、`*` が「その列を評価しない」を意味すること、主要な公式設計（Anthropic / OpenAI / Microsoft / Google ADK / LangGraph）の指針と矛盾しないことの説明（FR-011））
 - [ ] T025 [US3] `SKILL.md` に**提示フォーマットの節**を追記する（`research.md` R-4。`decide.sh` の `key=value` を日本語の文章として提示し、**適用した分岐と理由**を含める（FR-004 / SC-005）、配置先がスキルのときは**手順は `SKILL.md`・実行コードは `scripts/`** の区別を明示する（FR-003）、`--detect-conventions` の結果に沿った**リポジトリ相対パス**を示し、検出できない場合は役割と目安を併記する（FR-007 / FR-020）。**リポジトリ外のパスを示さない**ことを明記する）
 - [ ] T026 [US3] 変異探針で T022 の非空虚性を実測する（`plugins/placement-decision-flow/skills/placement-decision-flow/scripts/find-skills.sh` の `--detect-conventions` について、(a) `exists` 判定を常に `yes` に固定する、(b) 出力を 3 行に減らす、の 2 種を順に適用し、それぞれで T022 が**失敗する**ことを確認する。各変異は `/tmp` に退避して復元し、**復元後にフルスイートを再実行して全 pass に戻る**ことまでを 1 セットとする）
